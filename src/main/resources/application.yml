@@ -1,0 +1,29 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true #当遇到相同名字的时候，是否允许覆盖注册
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+  application:
+    name: user-center
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/jidian
+    username: root
+    password: 123456
+  #sesssion 失效时间
+  session:
+    timeout: 86400
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
+  global-config:
+    db-config:
+      logic-delete-field: isDelete #逻辑删除字段名称
+      logic-delete-value: 1 #逻辑已删除值
+      logic-not-delete-value: 0 #逻辑未删除值
