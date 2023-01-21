@@ -1,9 +1,6 @@
-package com.jidian.usercenter.controller;
-
-
+package com.juejin.usercenter.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import javax.annotation.Resource;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @Slf4j
-@SuppressWarnings({"all"})
 @RestController
 @RequestMapping("/user")
 public class UserController {

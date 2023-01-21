@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juejin.usercenter.mapper.ArticleMapper">
+
+    <resultMap id="BaseResultMap" type="com.juejin.usercenter.model.entity.Article">
+            <id property="articleid" column="articleID" jdbcType="VARCHAR"/>
+            <result property="createuser" column="createUser" jdbcType="VARCHAR"/>
+            <result property="snapshoot" column="snapshoot" jdbcType="VARCHAR"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="preview" column="preview" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="label" column="label" jdbcType="VARCHAR"/>
+            <result property="likesnumber" column="likesNumber" jdbcType="INTEGER"/>
+            <result property="readingquantity" column="readingQuantity" jdbcType="INTEGER"/>
+            <result property="commentcount" column="commentCount" jdbcType="INTEGER"/>
+            <result property="category" column="category" jdbcType="VARCHAR"/>
+            <result property="articlestatus" column="articleStatus" jdbcType="TINYINT"/>
+            <result property="currenttime" column="currentTime" jdbcType="TIMESTAMP"/>
+            <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isdelete" column="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        articleID,createUser,snapshoot,
+        title,preview,content,
+        label,likesNumber,readingQuantity,
+        commentCount,category,articleStatus,
+        currentTime,updateTime,isDelete
+    </sql>
+</mapper>

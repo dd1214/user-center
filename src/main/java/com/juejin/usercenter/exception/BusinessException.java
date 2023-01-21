@@ -1,6 +1,6 @@
-package com.jidian.usercenter.exception;
+package com.juejin.usercenter.exception;
 
-import com.jidian.usercenter.common.ErrorCode;
+import com.juejin.usercenter.common.ErrorCode;
 
 /**
  * 自定义异常类

@@ -1,8 +1,8 @@
-package com.jidian.usercenter.exception;
+package com.juejin.usercenter.exception;
 
-import com.jidian.usercenter.common.BaseResponse;
-import com.jidian.usercenter.common.ErrorCode;
-import com.jidian.usercenter.common.ResultUtils;
+import com.juejin.usercenter.common.BaseResponse;
+import com.juejin.usercenter.common.ErrorCode;
+import com.juejin.usercenter.common.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

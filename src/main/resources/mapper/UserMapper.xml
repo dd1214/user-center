@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.juejin.usercenter.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.juejin.usercenter.model.entity.User">
+            <id property="userid" column="userID" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickName" jdbcType="VARCHAR"/>
+            <result property="useravatar" column="userAvatar" jdbcType="VARCHAR"/>
+            <result property="userpassword" column="userPassword" jdbcType="VARCHAR"/>
+            <result property="creationlevel" column="creationLevel" jdbcType="VARCHAR"/>
+            <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
+            <result property="likesnumber" column="likesNumber" jdbcType="INTEGER"/>
+            <result property="readingquantity" column="readingQuantity" jdbcType="INTEGER"/>
+            <result property="userstatus" column="userStatus" jdbcType="TINYINT"/>
+            <result property="userrole" column="userRole" jdbcType="TINYINT"/>
+            <result property="currenttime" column="currentTime" jdbcType="TIMESTAMP"/>
+            <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isdelete" column="isDelete" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        userID,nickName,userAvatar,
+        userPassword,creationLevel,introduction,
+        likesNumber,readingQuantity,userStatus,
+        userRole,currentTime,updateTime,
+        isDelete
+    </sql>
+</mapper>

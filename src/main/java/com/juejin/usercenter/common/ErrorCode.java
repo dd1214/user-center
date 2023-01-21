@@ -1,4 +1,4 @@
-package com.jidian.usercenter.common;
+package com.juejin.usercenter.common;
 
 /**
  * 错误码

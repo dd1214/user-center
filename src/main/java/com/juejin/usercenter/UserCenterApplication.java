@@ -1,4 +1,4 @@
-package com.jidian.usercenter;
+package com.juejin.usercenter;
 
 
 

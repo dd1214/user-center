@@ -1,4 +1,4 @@
-package com.jidian.usercenter.contant;
+package com.juejin.usercenter.contant;
 
 /**
  * 用户常量

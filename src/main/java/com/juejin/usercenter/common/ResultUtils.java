@@ -1,4 +1,4 @@
-package com.jidian.usercenter.common;
+package com.juejin.usercenter.common;
 
 /**
  * 返回工具类

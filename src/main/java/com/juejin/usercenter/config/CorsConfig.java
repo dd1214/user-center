@@ -1,4 +1,4 @@
-package com.jidian.usercenter.config;
+package com.juejin.usercenter.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
