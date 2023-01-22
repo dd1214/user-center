@@ -1,4 +1,4 @@
-package com.jidian.usercenter;
+package com.juejin.usercenter;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

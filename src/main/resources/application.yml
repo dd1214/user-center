@@ -1,15 +1,9 @@
 spring:
-  main:
-    allow-bean-definition-overriding: true #当遇到相同名字的时候，是否允许覆盖注册
-  servlet:
-    multipart:
-      max-file-size: 10MB
-      max-request-size: 100MB
   application:
     name: user-center
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/jidian
+    url: jdbc:mysql://localhost:3306/juejin
     username: root
     password: 123456
   #sesssion 失效时间
