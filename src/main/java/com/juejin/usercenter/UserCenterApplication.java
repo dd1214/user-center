@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SuppressWarnings({"all"})
 @SpringBootApplication
-@MapperScan("com.jidian.usercenter.mapper")
+@MapperScan("com.juejin.usercenter.mapper")
 public class UserCenterApplication {
 
     public static void main(String[] args) {

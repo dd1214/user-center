@@ -2,7 +2,8 @@ package com.juejin.usercenter.mapper;
 
 import com.juejin.usercenter.model.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.mybatis.spring.annotation.MapperScan;
+import org.apache.ibatis.annotations.Mapper;
+
 
 /**
 * @author zhaowei
@@ -10,8 +11,6 @@ import org.mybatis.spring.annotation.MapperScan;
 * @createDate 2023-01-21 14:13:27
 * @Entity com.jidian.usercenter.model.User
 */
-
-@MapperScan
 public interface UserMapper extends BaseMapper<User> {
 
 }
