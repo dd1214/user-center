@@ -2,6 +2,7 @@ package com.juejin.usercenter.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
@@ -89,6 +90,7 @@ public class User implements Serializable {
     /**
      * 逻辑删除 0-正常 1-删除
      */
+    @TableLogic
     @TableField(value = "isDelete")
     private Integer isdelete;
 

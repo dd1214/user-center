@@ -62,9 +62,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         if (preview.length() > 200 || preview.length() < 25){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"预览长度不符合要求");
         }
-        if (content.length() > 100000 || content.length() <= 0){
-            throw new BusinessException(ErrorCode.PARAMS_ERROR,"内容长度不符合要求");
-        }
         int flag = 0;
         for (String s : ARTICLE_CATEGORY) {
             if (s.equals(category)) {

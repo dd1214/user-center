@@ -15,11 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import static com.juejin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
 
-/**
-* @author zhaowei
-* @description 针对表【user(用户)】的数据库操作Service实现
-* @createDate 2023-01-21 14:13:27
-*/
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService {
@@ -103,6 +98,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return user;
     }
 
+    /**
+     * 用户注销
+     *
+     * @param request 请求
+     */
+    @Override
+    public boolean userLogout(HttpServletRequest request) {
+        if (request.getSession().getAttribute(USER_LOGIN_STATE) == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN, "未登录");
+        }
+        // 移除登录态
+        request.getSession().removeAttribute(USER_LOGIN_STATE);
+        return true;
+    }
 
 }
 
