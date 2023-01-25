@@ -8,6 +8,7 @@ class UserCenterApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
 
 }

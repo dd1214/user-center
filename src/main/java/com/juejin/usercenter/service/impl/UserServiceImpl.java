@@ -13,7 +13,7 @@ import org.springframework.util.DigestUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import static com.juejin.usercenter.contant.UserConstant.USER_LOGIN_STATE;
+import static com.juejin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
 * @author zhaowei
@@ -50,7 +50,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"昵称重复");
         }
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
-        String userId = String.valueOf(System.currentTimeMillis() + (int)((Math.random()*9+1)*100000));
+        String userId = String.valueOf(System.currentTimeMillis()) +  (int)((Math.random()*9+1)*100000);
         User user = new User();
         user.setUserid(userId);
         user.setNickname(nickname);

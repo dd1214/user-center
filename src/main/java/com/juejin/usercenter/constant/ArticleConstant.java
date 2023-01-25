@@ -1,4 +1,4 @@
-package com.juejin.usercenter.contant;
+package com.juejin.usercenter.constant;
 
 
 /**
