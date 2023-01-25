@@ -1,5 +1,6 @@
 package com.juejin.usercenter.controller;
 
+
 import com.juejin.usercenter.common.BaseResponse;
 import com.juejin.usercenter.common.ErrorCode;
 import com.juejin.usercenter.common.ResultUtils;
@@ -11,13 +12,12 @@ import com.juejin.usercenter.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import static com.juejin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
 
 
 /**
@@ -61,6 +61,16 @@ public class UserController {
         }
         User user = userService.userLogin(nickname, userPassword, request);
         return ResultUtils.success(user);
+    }
+
+    @GetMapping("/currentUser")
+    public BaseResponse<User> currentUser(HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
+        return ResultUtils.success(currentUser);
     }
 
 }

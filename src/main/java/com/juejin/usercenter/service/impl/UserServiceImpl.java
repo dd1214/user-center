@@ -32,6 +32,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     private static final String SALT = "juejin";
 
+    /**
+     * 注册
+     * @param nickname     昵称
+     * @param userAvatar   头像
+     * @param userPassword 密码
+     * @param introduction 简介
+     * @return 用户id
+     */
+
     @Override
     public String userRegister(String nickname, String userAvatar, String userPassword, String introduction) {
         if (nickname.length() > 20 || nickname.length() < 2){
@@ -64,6 +73,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return userId;
     }
 
+    /**
+     * 登录
+     * @param nickname     昵称
+     * @param userPassword 密码
+     * @param request      HTTP请求
+     * @return 用户封装类
+     */
+
     @Override
     public User userLogin(String nickname, String userPassword, HttpServletRequest request) {
         if (nickname.length() > 20 || nickname.length() < 2){
@@ -85,6 +102,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
         return user;
     }
+
+
 }
 
 

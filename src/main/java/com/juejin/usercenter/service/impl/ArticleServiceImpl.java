@@ -20,7 +20,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.juejin.usercenter.constant.ArticleConstant.ARTICLE_CATEGORY;
 import static com.juejin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
@@ -114,6 +113,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         return ArticleMappingUtils.articleMapping(article,user);
     }
 
+    /**
+     * 按条件分页查询
+     * @param current 当前页数
+     * @param size  每页条数
+     * @param sortField 排序字段
+     * @param sortOrder 排序类型
+     * @param category 类别
+     * @return 文章列表
+     */
+
     @Override
     public ArrayList<ArticleVO> currentListArticle(long current, long size, String sortField, String sortOrder, String category) {
         ArrayList<ArticleVO> articles = new ArrayList<>();
@@ -123,8 +132,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
             articleQueryWrapper.orderBy(StringUtils.isNotBlank(sortField),
                     sortOrder.equals(CommonConstant.SORT_ORDER_ASC),sortField);
             Page<Article> page = articleMapper.selectPage(new Page<>(current, size), articleQueryWrapper);
-            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             for (Article record : page.getRecords()) {
+                QueryWrapper<User> queryWrapper = new QueryWrapper<>();
                 queryWrapper.eq("userID",record.getCreateuser());
                 User user = userMapper.selectOne(queryWrapper);
                 if (user == null){

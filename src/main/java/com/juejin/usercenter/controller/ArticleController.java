@@ -1,22 +1,24 @@
 package com.juejin.usercenter.controller;
 
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.juejin.usercenter.common.BaseResponse;
 import com.juejin.usercenter.common.ErrorCode;
 import com.juejin.usercenter.common.ResultUtils;
-import com.juejin.usercenter.constant.CommonConstant;
 import com.juejin.usercenter.exception.BusinessException;
+import com.juejin.usercenter.mapper.ArticleMapper;
+import com.juejin.usercenter.mapper.UserMapper;
 import com.juejin.usercenter.model.dto.article.ArticleAddRequest;
 import com.juejin.usercenter.model.dto.article.CurrentArticleRequest;
 import com.juejin.usercenter.model.dto.article.CurrentListArticle;
+import com.juejin.usercenter.model.dto.article.ImportArticleRequest;
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.entity.User;
 import com.juejin.usercenter.model.vo.ArticleVO;
 import com.juejin.usercenter.service.ArticleService;
+import com.juejin.usercenter.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import static com.sun.javafx.font.FontResource.SALT;
 
 /**
  * 文档接口
@@ -41,6 +44,15 @@ public class ArticleController {
 
     @Resource
     private ArticleService articleService;
+
+    @Resource
+    private ArticleMapper articleMapper;
+
+    @Resource
+    private UserMapper userMapper;
+
+    @Resource
+    private UserService userService;
 
     /**
      * 发布文章
@@ -82,6 +94,12 @@ public class ArticleController {
         return ResultUtils.success(articleService.currentArticle(id));
     }
 
+    /**
+     * 分页获取列表
+     * @param currentListArticle 请求
+     * @return 列表
+     */
+
     @PostMapping("current_list")
     public BaseResponse<ArrayList<ArticleVO>> currentListArticle(@RequestBody CurrentListArticle currentListArticle){
         if (currentListArticle == null){
@@ -97,6 +115,85 @@ public class ArticleController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         return ResultUtils.success(articleService.currentListArticle(current,size,sortField,sortOrder,category));
+    }
 
+    /**
+     * 批量导入
+     * @param importArticleRequest 请求
+     * @return 成功条数
+     */
+
+    @PostMapping("/import")
+    public BaseResponse<Integer> importArticle(@RequestBody ImportArticleRequest importArticleRequest){
+        if (importArticleRequest == null){
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+        ArrayList<ArticleVO> content = importArticleRequest.getContent();
+        int flag = 0;
+        for (ArticleVO articleVO : content) {
+            QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
+            String article_id = articleVO.getArticle_id();
+            articleQueryWrapper.eq("articleID",article_id);
+            List<Article> articles = articleMapper.selectList(articleQueryWrapper);
+            if (articles.size() == 0){
+                Article article = articleTo(articleVO);
+                boolean save;
+                try {
+                    save = articleService.save(article);
+                } catch (Exception e) {
+                    continue;
+                }
+                if (save){
+                    flag++;
+                }
+            }
+        }
+        return ResultUtils.success(flag);
+    }
+
+
+    /**
+     * articleVO类型转换
+     * @param articleVO 封装类
+     * @return article
+     */
+    public Article articleTo(ArticleVO articleVO){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("nickname",articleVO.getAuthor());
+        queryWrapper.eq("userAvatar",articleVO.getAvatar());
+        String userID = "";
+        List<User> users = userMapper.selectList(queryWrapper);
+        User userTo = null;
+        if (users.size() == 1){
+            userTo = users.get(0);
+        }
+        if (userTo == null){
+            User user = new User();
+            user.setUserid(String.valueOf(System.currentTimeMillis()) +  (int)((Math.random()*9+1)*100000));
+            user.setNickname(articleVO.getAuthor());
+            user.setUseravatar(articleVO.getAvatar());
+            user.setLikesnumber(articleVO.getCollect_count());
+            user.setReadingquantity(articleVO.getView_count());
+            user.setUserpassword(DigestUtils.md5DigestAsHex((SALT + "123456789").getBytes()));
+            userService.save(user);
+            userID = user.getUserid();
+        }else {
+            userTo.setReadingquantity(userTo.getReadingquantity() + articleVO.getView_count());
+            userTo.setLikesnumber(userTo.getLikesnumber() + articleVO.getCollect_count());
+            QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+            userQueryWrapper.eq("userID",userTo.getUserid());
+            userMapper.update(userTo,userQueryWrapper);
+            userID = userTo.getUserid();
+        }
+        Article article = new Article();
+        article.setArticleid(articleVO.getArticle_id());
+        article.setCreateuser(userID);
+        article.setSnapshoot(articleVO.getSnapshot());
+        article.setTitle(articleVO.getTitle());
+        article.setPreview(articleVO.getPreview());
+        article.setContent(articleVO.getContent());
+        article.setCategory(articleVO.getCategory());
+        article.setArticlestatus(1);
+        return article;
     }
 }
