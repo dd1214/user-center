@@ -220,6 +220,9 @@ public class ArticleController {
         article.setPreview(articleVO.getPreview());
         article.setContent(articleVO.getContent());
         article.setCategory(articleVO.getCategory());
+        article.setLikesnumber(articleVO.getCollect_count());
+        article.setReadingquantity(articleVO.getView_count());
+        article.setCommentcount(articleVO.getComment_count());
         article.setArticlestatus(1);
         return article;
     }
