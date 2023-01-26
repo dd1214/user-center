@@ -7,10 +7,7 @@ import com.juejin.usercenter.common.ResultUtils;
 import com.juejin.usercenter.exception.BusinessException;
 import com.juejin.usercenter.mapper.ArticleMapper;
 import com.juejin.usercenter.mapper.UserMapper;
-import com.juejin.usercenter.model.dto.article.ArticleAddRequest;
-import com.juejin.usercenter.model.dto.article.CurrentArticleRequest;
-import com.juejin.usercenter.model.dto.article.CurrentListArticle;
-import com.juejin.usercenter.model.dto.article.ImportArticleRequest;
+import com.juejin.usercenter.model.dto.article.*;
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.entity.User;
 import com.juejin.usercenter.model.vo.ArticleVO;
@@ -151,6 +148,36 @@ public class ArticleController {
         return ResultUtils.success(flag);
     }
 
+    /**
+     * 文章更新
+     * @param updateArticleRequest 请求
+     * @return 成功
+     */
+
+    @PostMapping("update")
+    public BaseResponse<Boolean> updateArticle(@RequestBody UpdateArticleRequest updateArticleRequest){
+        if (updateArticleRequest == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        ArticleVO content = updateArticleRequest.getContent();
+        return ResultUtils.success(articleService.updateArticle(content));
+    }
+
+    /**
+     * 删除文章
+     * @param deleteArticleRequest 请求
+     * @return 成功
+     */
+
+    @PostMapping("delete")
+    public BaseResponse<Boolean> deleteArticle(@RequestBody DeleteArticleRequest deleteArticleRequest){
+        if (deleteArticleRequest == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        return ResultUtils.success(userService.removeById(deleteArticleRequest.getId()));
+    }
+
+    //TODO 图片上传、批量/单个文章审核、
 
     /**
      * articleVO类型转换

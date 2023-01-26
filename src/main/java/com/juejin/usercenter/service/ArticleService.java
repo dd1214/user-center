@@ -47,4 +47,12 @@ public interface ArticleService extends IService<Article> {
      */
 
     ArrayList<ArticleVO> currentListArticle(long current, long size , String sortField, String sortOrder, String category);
+
+    /**
+     * 更新接口
+     * @param content 更新内容
+     * @return 成功
+     */
+
+    Boolean updateArticle(ArticleVO content);
 }

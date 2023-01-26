@@ -144,6 +144,31 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         }
         return articles;
     }
+
+    /**
+     * 更新
+     * @param content 更新内容
+     * @return 成功
+     */
+
+    @Override
+    public Boolean updateArticle(ArticleVO content) {
+        String article_id = content.getArticle_id();
+        Article article = new Article();
+        article.setArticleid(content.getArticle_id());
+        article.setSnapshoot(content.getSnapshot());
+        article.setTitle(content.getTitle());
+        article.setPreview(content.getPreview());
+        article.setContent(content.getContent());
+        article.setCategory(content.getCategory());
+        QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
+        articleQueryWrapper.eq("article",article_id);
+        int update = articleMapper.update(article, articleQueryWrapper);
+        if (update < 1){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"更新失败");
+        }
+        return true;
+    }
 }
 
 
