@@ -140,7 +140,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                 articles.add(ArticleMappingUtils.articleMapping(record,user));
             }
 
-
         }catch (Exception e){
             throw new BusinessException(ErrorCode.SYSTEM_ERROR,"获取文章列表失败");
         }

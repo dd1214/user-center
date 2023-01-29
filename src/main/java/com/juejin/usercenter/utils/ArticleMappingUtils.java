@@ -1,9 +1,9 @@
 package com.juejin.usercenter.utils;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+
 import com.juejin.usercenter.common.ErrorCode;
 import com.juejin.usercenter.exception.BusinessException;
-import com.juejin.usercenter.mapper.UserMapper;
+
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.entity.User;
 import com.juejin.usercenter.model.vo.ArticleVO;

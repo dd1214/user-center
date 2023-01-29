@@ -21,6 +21,11 @@ public class PageRequest {
     private long pageSize = 20;
 
     /**
+     * 总条数
+     */
+    private long total = 20;
+
+    /**
      * 排序字段
      */
     private String sortField;
