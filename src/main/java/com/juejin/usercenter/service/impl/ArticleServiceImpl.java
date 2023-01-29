@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import static com.juejin.usercenter.constant.ArticleConstant.ARTICLE_CATEGORY;
 import static com.juejin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
+import static com.juejin.usercenter.constant.homeConstant.TITLE_LISTS;
 
 
 @Service
@@ -138,6 +139,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                 }
                 articles.add(ArticleMappingUtils.articleMapping(record,user));
             }
+
 
         }catch (Exception e){
             throw new BusinessException(ErrorCode.SYSTEM_ERROR,"获取文章列表失败");

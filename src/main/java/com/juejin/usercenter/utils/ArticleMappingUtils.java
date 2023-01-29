@@ -30,6 +30,7 @@ public class ArticleMappingUtils {
         articleVO.setAvatar(user.getUseravatar());
         articleVO.setCategory(article.getCategory());
         articleVO.setContent(article.getContent());
+        articleVO.setState(article.getArticlestatus());
         return articleVO;
     }
 }

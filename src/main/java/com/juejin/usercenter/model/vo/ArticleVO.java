@@ -63,5 +63,10 @@ public class ArticleVO implements Serializable {
      */
     private String content;
 
+    /**
+     * 状态
+     */
+    private int state;
+
     private static final long serialVersionUID = 4603111303657020130L;
 }

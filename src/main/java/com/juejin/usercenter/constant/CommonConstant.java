@@ -3,7 +3,7 @@ package com.juejin.usercenter.constant;
 /**
  * 通用常量
  *
- * @author yupi
+ * @author
  */
 public interface CommonConstant {
 
