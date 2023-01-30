@@ -2,6 +2,8 @@ package com.juejin.usercenter.model.vo;
 
 import lombok.Data;
 
+import java.util.Date;
+
 
 @Data
 public class UserVO {
@@ -18,7 +20,7 @@ public class UserVO {
     /**
      * 用户头像
      */
-    private String useravatar;
+    private String avatar;
 
     /**
      * 简介
@@ -28,12 +30,18 @@ public class UserVO {
     /**
      * 点赞数
      */
-    private Integer likesnumber;
+    private Integer collectCount;
 
     /**
      * 阅读量
      */
-    private Integer readingquantity;
+    private Integer viewCount;
+
+    /**
+     * 创建时间
+     */
+
+    private Date currentTime;
 
     private static final long serialVersionUID = 1L;
 }

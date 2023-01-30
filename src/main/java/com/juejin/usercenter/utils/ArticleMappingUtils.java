@@ -1,7 +1,6 @@
 package com.juejin.usercenter.utils;
 
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.juejin.usercenter.common.ErrorCode;
 import com.juejin.usercenter.exception.BusinessException;
 
@@ -23,7 +22,7 @@ public class ArticleMappingUtils {
         ArticleVO articleVO = new ArticleVO();
         BeanUtils.copyProperties(article,articleVO);
         articleVO.setAuthor(user.getNickname());
-        articleVO.setAvatar(user.getUseravatar());
+        articleVO.setAvatar(user.getAvatar());
         return articleVO;
     }
 }

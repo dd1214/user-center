@@ -7,24 +7,25 @@
     <resultMap id="BaseResultMap" type="com.juejin.usercenter.model.entity.User">
             <id property="userid" column="userID" jdbcType="VARCHAR"/>
             <result property="nickname" column="nickName" jdbcType="VARCHAR"/>
-            <result property="useravatar" column="userAvatar" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
             <result property="userpassword" column="userPassword" jdbcType="VARCHAR"/>
             <result property="creationlevel" column="creationLevel" jdbcType="VARCHAR"/>
             <result property="introduction" column="introduction" jdbcType="VARCHAR"/>
-            <result property="likesnumber" column="likesNumber" jdbcType="INTEGER"/>
-            <result property="readingquantity" column="readingQuantity" jdbcType="INTEGER"/>
+            <result property="collectcount" column="collectCount" jdbcType="INTEGER"/>
+            <result property="viewcount" column="viewCount" jdbcType="INTEGER"/>
             <result property="userstatus" column="userStatus" jdbcType="TINYINT"/>
             <result property="userrole" column="userRole" jdbcType="TINYINT"/>
             <result property="currenttime" column="currentTime" jdbcType="TIMESTAMP"/>
             <result property="updatetime" column="updateTime" jdbcType="TIMESTAMP"/>
             <result property="isdelete" column="isDelete" jdbcType="TINYINT"/>
+            <result property="useraccount" column="userAccount" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        userID,nickName,userAvatar,
+        userID,nickName,avatar,
         userPassword,creationLevel,introduction,
-        likesNumber,readingQuantity,userStatus,
+        collectCount,viewCount,userStatus,
         userRole,currentTime,updateTime,
-        isDelete
+        isDelete,userAccount
     </sql>
 </mapper>

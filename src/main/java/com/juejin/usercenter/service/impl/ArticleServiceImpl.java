@@ -8,14 +8,15 @@ import com.juejin.usercenter.constant.CommonConstant;
 import com.juejin.usercenter.exception.BusinessException;
 import com.juejin.usercenter.mapper.ArticleMapper;
 import com.juejin.usercenter.mapper.UserMapper;
-import com.juejin.usercenter.model.dto.article.CurrentListArticle;
+import com.juejin.usercenter.model.dto.article.CurrentListArticleRequest;
+import com.juejin.usercenter.model.dto.article.UpdateArticleRequest;
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.entity.User;
 import com.juejin.usercenter.model.vo.ArticleVO;
-import com.juejin.usercenter.model.vo.CurrentListVO;
+import com.juejin.usercenter.model.vo.CurrentListArticleVO;
+import com.juejin.usercenter.model.vo.UpdateArticleVO;
 import com.juejin.usercenter.service.ArticleService;
 import com.juejin.usercenter.utils.ArticleMappingUtils;
-import io.swagger.models.auth.In;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -24,8 +25,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-import static com.juejin.usercenter.constant.ArticleConstant.ARTICLE_CATEGORY;
 import static com.juejin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
 
 
@@ -116,13 +117,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
      */
 
     @Override
-    public CurrentListVO currentListArticle(CurrentListArticle currentListArticle) {
+    public CurrentListArticleVO currentListArticle(CurrentListArticleRequest currentListArticle) {
         if (currentListArticle == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         ArrayList<ArticleVO> articles = new ArrayList<>();
-        Article article = new Article();
-        BeanUtils.copyProperties(currentListArticle,article);
         long current = currentListArticle.getCurrent();
         long size = currentListArticle.getPageSize();
         String sortField = currentListArticle.getSortField();
@@ -130,22 +129,23 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         String content = currentListArticle.getContent();
         Integer articleStatus = currentListArticle.getArticleStatus();
         String label = currentListArticle.getLabel();
+        String category = currentListArticle.getCategory();
         long total = 0;
         try {
             QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
-            articleQueryWrapper.eq(articleStatus == -1,"articleStatus",articleStatus);
+            articleQueryWrapper.eq(articleStatus != -1,"articleStatus",articleStatus);
             articleQueryWrapper.like(StringUtils.isNoneBlank(label),"label",label);
+            articleQueryWrapper.eq(StringUtils.isNoneBlank(category),"category",category);
             articleQueryWrapper.like(StringUtils.isNotBlank(content),"content",content).or()
                     .like(StringUtils.isNotBlank(content),"title",content).or()
                             .like(StringUtils.isNotBlank(content),"preview",content);
             articleQueryWrapper.orderBy(StringUtils.isNotBlank(sortField),
                     sortOrder.equals(CommonConstant.SORT_ORDER_ASC),sortField);
             Page<Article> page = articleMapper.selectPage(new Page<>(current, size), articleQueryWrapper);
-            System.out.println(page.getTotal());
             total = page.getTotal();
             for (Article record : page.getRecords()) {
                 QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-                queryWrapper.eq("userID",record.getAuthor());
+                queryWrapper.eq("nickname",record.getAuthor());
                 User user = userMapper.selectOne(queryWrapper);
                 if (user == null){
                     continue;
@@ -155,7 +155,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         }catch (Exception e){
             throw new BusinessException(ErrorCode.SYSTEM_ERROR,"获取文章列表失败");
         }
-        CurrentListVO currentListVO = new CurrentListVO();
+        Collections.shuffle(articles);
+        CurrentListArticleVO currentListVO = new CurrentListArticleVO();
         currentListVO.setList(articles);
         currentListVO.setTotal(total);
         return currentListVO;
@@ -163,22 +164,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
     /**
      * 更新
-     * @param content 更新内容
+     * @param data 更新内容
      * @return 成功
      */
 
     @Override
-    public Boolean updateArticle(ArticleVO content) {
-        String article_id = content.getArticleID();
+    public Boolean updateArticle(UpdateArticleRequest data) {
+        String id = data.getId();
+        UpdateArticleVO content = data.getContent();
         Article article = new Article();
-        article.setArticleID(content.getArticleID());
         article.setSnapshot(content.getSnapshot());
         article.setTitle(content.getTitle());
         article.setPreview(content.getPreview());
         article.setContent(content.getContent());
         article.setCategory(content.getCategory());
         QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
-        articleQueryWrapper.eq("article",article_id);
+        articleQueryWrapper.eq("articleID",id);
         int update = articleMapper.update(article, articleQueryWrapper);
         if (update < 1){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"更新失败");

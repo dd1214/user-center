@@ -6,13 +6,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 @Data
-public class CurrentListVO implements Serializable {
+public class CurrentListUserVO implements Serializable {
 
     /**
      * 数据列表
      */
 
-    private ArrayList<ArticleVO> list;
+    private ArrayList<UserVO> list;
 
     /**
      * 数据总条数

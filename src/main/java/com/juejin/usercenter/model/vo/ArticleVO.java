@@ -3,6 +3,7 @@ package com.juejin.usercenter.model.vo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 前端文章获取类
@@ -75,7 +76,7 @@ public class ArticleVO implements Serializable {
     /**
      * 创建时间
      */
-    private Data currentTime;
+    private Date currentTime;
 
     private static final long serialVersionUID = 4603111303657020130L;
 }

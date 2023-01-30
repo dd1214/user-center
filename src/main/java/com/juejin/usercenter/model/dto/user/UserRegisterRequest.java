@@ -12,6 +12,12 @@ public class UserRegisterRequest implements Serializable{
      * 昵称
      */
 
+    private String userAccount;
+
+    /**
+     * 昵称
+     */
+
     private String nickname;
 
     /**

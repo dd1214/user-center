@@ -1,14 +1,14 @@
 package com.juejin.usercenter.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.juejin.usercenter.model.dto.article.CurrentListArticle;
+import com.juejin.usercenter.model.dto.article.CurrentListArticleRequest;
+import com.juejin.usercenter.model.dto.article.UpdateArticleRequest;
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.vo.ArticleVO;
-import com.juejin.usercenter.model.vo.CurrentListVO;
+import com.juejin.usercenter.model.vo.CurrentListArticleVO;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 
 /**
 * @author zhaowei
@@ -43,13 +43,13 @@ public interface ArticleService extends IService<Article> {
      * @return 分页列表
      */
 
-    CurrentListVO currentListArticle(CurrentListArticle currentListArticle);
+    CurrentListArticleVO currentListArticle(CurrentListArticleRequest currentListArticle);
 
     /**
      * 更新接口
-     * @param content 更新内容
+     * @param data 更新内容
      * @return 成功
      */
 
-    Boolean updateArticle(ArticleVO content);
+    Boolean updateArticle(UpdateArticleRequest data);
 }

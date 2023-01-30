@@ -11,22 +11,30 @@ import com.juejin.usercenter.model.dto.article.*;
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.entity.User;
 import com.juejin.usercenter.model.vo.ArticleVO;
-import com.juejin.usercenter.model.vo.CurrentListVO;
+import com.juejin.usercenter.model.vo.CurrentListArticleVO;
 import com.juejin.usercenter.model.vo.ImportArticleVO;
 import com.juejin.usercenter.service.ArticleService;
 import com.juejin.usercenter.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.util.Auth;
+import com.qiniu.storage.Configuration;
+import com.qiniu.http.Response;
+
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import static com.sun.javafx.font.FontResource.SALT;
+import static com.juejin.usercenter.constant.ArticleConstant.ACCESS_KEY;
+import static com.juejin.usercenter.constant.ArticleConstant.SECRET_KEY;
 
 /**
  * 文档接口
@@ -95,7 +103,7 @@ public class ArticleController {
      */
 
     @PostMapping("current_list")
-    public BaseResponse<CurrentListVO> currentListArticle(@RequestBody CurrentListArticle currentListArticle){
+    public BaseResponse<CurrentListArticleVO> currentListArticle(@RequestBody CurrentListArticleRequest currentListArticle){
         if (currentListArticle == null) {
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
@@ -127,7 +135,7 @@ public class ArticleController {
                 User user = new User();
                 user.setUserid(String.valueOf(System.currentTimeMillis()) +  (int)((Math.random()*9+1)*100000));
                 user.setNickname(articleVO.getAuthor());
-                user.setUseravatar(articleVO.getAvatar());
+                user.setAvatar(articleVO.getAvatar());
                 userService.save(user);
             }
             QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
@@ -162,8 +170,7 @@ public class ArticleController {
         if (updateArticleRequest == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        ArticleVO content = updateArticleRequest.getContent();
-        return ResultUtils.success(articleService.updateArticle(content));
+        return ResultUtils.success(articleService.updateArticle(updateArticleRequest));
     }
 
     /**
@@ -177,9 +184,32 @@ public class ArticleController {
         if (deleteArticleRequest == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        return ResultUtils.success(userService.removeById(deleteArticleRequest.getId()));
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        String id = deleteArticleRequest.getId();
+        if (id == null || id.length() != 17){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        queryWrapper.eq("articleID",id);
+        return ResultUtils.success(articleService.remove(queryWrapper));
     }
 
-    //TODO 图片上传、批量/单个文章审核、
-
+    @PostMapping("/uploadImg")
+    public BaseResponse<String> uploadArticleImg(@RequestParam MultipartFile image) throws IOException {
+        if (image.isEmpty()) {
+           throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+        byte[] bytes = image.getBytes();
+        String imageName = UUID.randomUUID().toString();
+        String bucketName = "juejincms";
+        Configuration cfg = new Configuration();
+        UploadManager uploadManager = new UploadManager(cfg);
+        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+        String token = auth.uploadToken(bucketName);
+        Response r = uploadManager.put(bytes, imageName, token);
+        String url = "http://rpaka2fkv.hb-bkt.clouddn.com/" + imageName;
+        if (!r.isOK()){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"文件上传失败");
+        }
+        return ResultUtils.success(url);
+    }
 }
