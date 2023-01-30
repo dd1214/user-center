@@ -11,15 +11,15 @@ import com.juejin.usercenter.model.dto.article.*;
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.entity.User;
 import com.juejin.usercenter.model.vo.ArticleVO;
+import com.juejin.usercenter.model.vo.CurrentListVO;
+import com.juejin.usercenter.model.vo.ImportArticleVO;
 import com.juejin.usercenter.service.ArticleService;
 import com.juejin.usercenter.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -63,28 +63,25 @@ public class ArticleController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         String title = articleAddRequest.getTitle();
-        String snapshoot = articleAddRequest.getSnapshoot();
+        String snapshot = articleAddRequest.getSnapshot();
         String preview = articleAddRequest.getPreview();
         String category = articleAddRequest.getCategory();
+        String label = articleAddRequest.getLabel();
         String content = articleAddRequest.getContent();
-        if (StringUtils.isAnyBlank(title,preview,content,category)){
+        if (StringUtils.isAnyBlank(title,preview,content,category,label)){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        return ResultUtils.success(articleService.articleAdd(title,snapshoot,preview,category,content,request));
+        return ResultUtils.success(articleService.articleAdd(title,snapshot,preview,category,content,label,request));
     }
 
     /**
      * 获取一条文章
-     * @param currentArticleRequest 请求
+     * @param id 文章id
      * @return 文章映射
      */
 
-    @PostMapping("/current")
-    public BaseResponse<ArticleVO> currentArticle(@RequestBody CurrentArticleRequest currentArticleRequest){
-        if (currentArticleRequest == null){
-            throw new BusinessException(ErrorCode.NULL_ERROR);
-        }
-        String id = currentArticleRequest.getId();
+    @GetMapping("/current")
+    public BaseResponse<ArticleVO> currentArticle(String id){
         if (StringUtils.isAnyBlank(id)){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
@@ -98,20 +95,15 @@ public class ArticleController {
      */
 
     @PostMapping("current_list")
-    public BaseResponse<ArrayList<ArticleVO>> currentListArticle(@RequestBody CurrentListArticle currentListArticle){
-        if (currentListArticle == null){
+    public BaseResponse<CurrentListVO> currentListArticle(@RequestBody CurrentListArticle currentListArticle){
+        if (currentListArticle == null) {
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
-        long current = currentListArticle.getCurrent();
-        long size = currentListArticle.getPageSize();
-        String sortField = currentListArticle.getSortField();
-        String sortOrder = currentListArticle.getSortOrder();
-        String category = currentListArticle.getCategory();
         //限制爬虫
-        if(size > 50){
+        if(currentListArticle.getPageSize() > 50){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        return ResultUtils.success(articleService.currentListArticle(current,size,sortField,sortOrder,category));
+        return ResultUtils.success(articleService.currentListArticle(currentListArticle));
     }
 
     /**
@@ -125,15 +117,26 @@ public class ArticleController {
         if (importArticleRequest == null){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
-        ArrayList<ArticleVO> content = importArticleRequest.getContent();
+        ArrayList<ImportArticleVO> content = importArticleRequest.getContent();
         int flag = 0;
-        for (ArticleVO articleVO : content) {
+        for (ImportArticleVO articleVO : content) {
+            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+            queryWrapper.eq("nickname",articleVO.getAuthor());
+            List<User> users = userMapper.selectList(queryWrapper);
+            if (users.size() < 1){
+                User user = new User();
+                user.setUserid(String.valueOf(System.currentTimeMillis()) +  (int)((Math.random()*9+1)*100000));
+                user.setNickname(articleVO.getAuthor());
+                user.setUseravatar(articleVO.getAvatar());
+                userService.save(user);
+            }
             QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
-            String article_id = articleVO.getArticle_id();
-            articleQueryWrapper.eq("articleID",article_id);
+            String articleID = articleVO.getArticleID();
+            articleQueryWrapper.eq("articleID",articleID);
             List<Article> articles = articleMapper.selectList(articleQueryWrapper);
             if (articles.size() == 0){
-                Article article = articleTo(articleVO);
+                Article article = new Article();
+                BeanUtils.copyProperties(articleVO,article);
                 boolean save;
                 try {
                     save = articleService.save(article);
@@ -179,51 +182,4 @@ public class ArticleController {
 
     //TODO 图片上传、批量/单个文章审核、
 
-    /**
-     * articleVO类型转换
-     * @param articleVO 封装类
-     * @return article
-     */
-    public Article articleTo(ArticleVO articleVO){
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("nickname",articleVO.getAuthor());
-        queryWrapper.eq("userAvatar",articleVO.getAvatar());
-        String userID = "";
-        List<User> users = userMapper.selectList(queryWrapper);
-        User userTo = null;
-        if (users.size() == 1){
-            userTo = users.get(0);
-        }
-        if (userTo == null){
-            User user = new User();
-            user.setUserid(String.valueOf(System.currentTimeMillis()) +  (int)((Math.random()*9+1)*100000));
-            user.setNickname(articleVO.getAuthor());
-            user.setUseravatar(articleVO.getAvatar());
-            user.setLikesnumber(articleVO.getCollect_count());
-            user.setReadingquantity(articleVO.getView_count());
-            user.setUserpassword(DigestUtils.md5DigestAsHex((SALT + "123456789").getBytes()));
-            userService.save(user);
-            userID = user.getUserid();
-        }else {
-            userTo.setReadingquantity(userTo.getReadingquantity() + articleVO.getView_count());
-            userTo.setLikesnumber(userTo.getLikesnumber() + articleVO.getCollect_count());
-            QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
-            userQueryWrapper.eq("userID",userTo.getUserid());
-            userMapper.update(userTo,userQueryWrapper);
-            userID = userTo.getUserid();
-        }
-        Article article = new Article();
-        article.setArticleid(articleVO.getArticle_id());
-        article.setCreateuser(userID);
-        article.setSnapshoot(articleVO.getSnapshot());
-        article.setTitle(articleVO.getTitle());
-        article.setPreview(articleVO.getPreview());
-        article.setContent(articleVO.getContent());
-        article.setCategory(articleVO.getCategory());
-        article.setLikesnumber(articleVO.getCollect_count());
-        article.setReadingquantity(articleVO.getView_count());
-        article.setCommentcount(articleVO.getComment_count());
-        article.setArticlestatus(1);
-        return article;
-    }
 }

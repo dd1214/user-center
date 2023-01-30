@@ -1,10 +1,10 @@
 package com.juejin.usercenter.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.juejin.usercenter.model.entity.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.juejin.usercenter.model.dto.article.CurrentListArticle;
+import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.vo.ArticleVO;
-import io.swagger.models.auth.In;
+import com.juejin.usercenter.model.vo.CurrentListVO;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +20,15 @@ public interface ArticleService extends IService<Article> {
     /**
      *  添加文章
      * @param title 标题
-     * @param snapshoot 快照
+     * @param snapshot 快照
      * @param preview  预览
      * @param category 分类
      * @param content  内容
+     * @param label  标签
      * @return 成功
      */
 
-    Integer articleAdd(String title, String snapshoot, String preview, String category, String content , HttpServletRequest request);
+    Integer articleAdd(String title, String snapshot, String preview, String category, String content , String label, HttpServletRequest request);
 
     /**
      * 获取文章
@@ -38,15 +39,11 @@ public interface ArticleService extends IService<Article> {
 
     /**
      *  分页查询
-     * @param current 当前页数
-     * @param size  每页条数
-     * @param sortField 排序字段
-     * @param sortOrder 排序类型
-     * @param category 类别
+     * @param currentListArticle 封装请求类
      * @return 分页列表
      */
 
-    ArrayList<ArticleVO> currentListArticle(long current, long size , String sortField, String sortOrder, String category);
+    CurrentListVO currentListArticle(CurrentListArticle currentListArticle);
 
     /**
      * 更新接口

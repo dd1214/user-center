@@ -13,7 +13,7 @@ public class ArticleAddRequest implements Serializable {
     /**
      * 快照
      */
-    private String snapshoot;
+    private String snapshot;
 
     /**
      * 标题
@@ -24,6 +24,11 @@ public class ArticleAddRequest implements Serializable {
      * 预览
      */
     private String preview;
+
+    /**
+     * 标签
+     */
+    private String label;
 
     /**
      * 分类

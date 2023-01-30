@@ -4,14 +4,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-/**
- * 前端文章获取类
- */
-
-
 @Data
-public class ArticleVO implements Serializable {
-
+public class ImportArticleVO implements Serializable {
     /**
      * 文章id
      */
@@ -66,16 +60,6 @@ public class ArticleVO implements Serializable {
      * 内容
      */
     private String content;
-
-    /**
-     * 文章状态
-     */
-    private int articleStatus;
-
-    /**
-     * 创建时间
-     */
-    private Data currentTime;
 
     private static final long serialVersionUID = 4603111303657020130L;
 }
