@@ -171,13 +171,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     @Override
     public Boolean updateArticle(UpdateArticleRequest data) {
         String id = data.getId();
-        UpdateArticleVO content = data.getContent();
+        UpdateArticleVO cont = data.getContent();
+        String content = cont.getContent();
+        String category = cont.getCategory();
+        String preview = cont.getPreview();
+        String title = cont.getTitle();
+        String snapshot = cont.getSnapshot();
+        if (StringUtils.isAnyBlank(content,category,preview,title,snapshot)){
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
         Article article = new Article();
-        article.setSnapshot(content.getSnapshot());
-        article.setTitle(content.getTitle());
-        article.setPreview(content.getPreview());
-        article.setContent(content.getContent());
-        article.setCategory(content.getCategory());
+        article.setSnapshot(snapshot);
+        article.setTitle(title);
+        article.setPreview(preview);
+        article.setContent(content);
+        article.setCategory(category);
         QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
         articleQueryWrapper.eq("articleID",id);
         int update = articleMapper.update(article, articleQueryWrapper);

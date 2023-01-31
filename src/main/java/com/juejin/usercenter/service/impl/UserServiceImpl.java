@@ -172,14 +172,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public boolean updateUser(UpdateUserRequest updateUserRequest) {
         String id = updateUserRequest.getId();
         UpdateUserVO content = updateUserRequest.getContent();
+        String avatar = content.getAvatar();
+        String introduction = content.getIntroduction();
+        String nickname = content.getNickname();
+        if (StringUtils.isAnyBlank(avatar,id,introduction,nickname)){
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
         User user = new User();
-        user.setAvatar(content.getAvatar());
-        user.setNickname(content.getNickname());
-        user.setIntroduction(content.getIntroduction());
+        user.setAvatar(avatar);
+        user.setNickname(nickname);
+        user.setIntroduction(introduction);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("userID",id);
         int update = userMapper.update(user, queryWrapper);
-        if (update == 0){
+        if (update < 0){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"用户更新失败");
         }
         return true;
