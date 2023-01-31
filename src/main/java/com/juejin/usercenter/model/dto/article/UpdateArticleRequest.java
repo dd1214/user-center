@@ -1,7 +1,7 @@
 package com.juejin.usercenter.model.dto.article;
 
 
-import com.juejin.usercenter.model.vo.UpdateArticleVO;
+import com.juejin.usercenter.model.vo.article.UpdateArticleVO;
 import lombok.Data;
 
 import java.io.Serializable;

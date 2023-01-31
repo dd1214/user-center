@@ -6,7 +6,7 @@ import com.juejin.usercenter.exception.BusinessException;
 
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.entity.User;
-import com.juejin.usercenter.model.vo.ArticleVO;
+import com.juejin.usercenter.model.vo.article.ArticleVO;
 import org.springframework.beans.BeanUtils;
 
 /**

@@ -1,5 +1,6 @@
 package com.juejin.usercenter.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -12,9 +13,10 @@ import com.juejin.usercenter.model.dto.article.CurrentListArticleRequest;
 import com.juejin.usercenter.model.dto.article.UpdateArticleRequest;
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.entity.User;
-import com.juejin.usercenter.model.vo.ArticleVO;
-import com.juejin.usercenter.model.vo.CurrentListArticleVO;
-import com.juejin.usercenter.model.vo.UpdateArticleVO;
+import com.juejin.usercenter.model.vo.article.ArticleVO;
+import com.juejin.usercenter.model.vo.article.AuditArticleVO;
+import com.juejin.usercenter.model.vo.article.CurrentListArticleVO;
+import com.juejin.usercenter.model.vo.article.UpdateArticleVO;
 import com.juejin.usercenter.service.ArticleService;
 import com.juejin.usercenter.utils.ArticleMappingUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -193,6 +195,31 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"更新失败");
         }
         return true;
+    }
+
+    /**
+     * 批量修改文章状态
+     * @param content 内容
+     * @return 成功条数
+     */
+
+    @Override
+    public Integer updateStatus(ArrayList<AuditArticleVO> content) {
+        int flag = 0;
+        for (AuditArticleVO articleVO : content) {
+            String id = articleVO.getId();
+            if (StringUtils.isAnyBlank(id) || id.length() != 19){
+                continue;
+            }
+            Article article = new Article();
+            QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
+            articleQueryWrapper.eq("articleID",id);
+            Article selectOne = articleMapper.selectOne(articleQueryWrapper);
+            BeanUtils.copyProperties(selectOne,article);
+            article.setArticleStatus(2);
+            flag += articleMapper.update(article, articleQueryWrapper);
+        }
+        return flag;
     }
 }
 

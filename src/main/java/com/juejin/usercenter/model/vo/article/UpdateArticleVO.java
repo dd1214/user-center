@@ -1,4 +1,4 @@
-package com.juejin.usercenter.model.vo;
+package com.juejin.usercenter.model.vo.article;
 
 import lombok.Data;
 

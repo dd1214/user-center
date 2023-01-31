@@ -4,9 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.juejin.usercenter.model.dto.article.CurrentListUserRequest;
 import com.juejin.usercenter.model.dto.user.UpdateUserRequest;
 import com.juejin.usercenter.model.entity.User;
-import com.juejin.usercenter.model.vo.CurrentListUserVO;
-import com.juejin.usercenter.model.vo.UserVO;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.juejin.usercenter.model.vo.user.CurrentListUserVO;
+import com.juejin.usercenter.model.vo.user.UserVO;
 
 import javax.servlet.http.HttpServletRequest;
 

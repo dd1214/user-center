@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.juejin.usercenter.model.dto.article.CurrentListArticleRequest;
 import com.juejin.usercenter.model.dto.article.UpdateArticleRequest;
 import com.juejin.usercenter.model.entity.Article;
-import com.juejin.usercenter.model.vo.ArticleVO;
-import com.juejin.usercenter.model.vo.CurrentListArticleVO;
+import com.juejin.usercenter.model.vo.article.ArticleVO;
+import com.juejin.usercenter.model.vo.article.AuditArticleVO;
+import com.juejin.usercenter.model.vo.article.CurrentListArticleVO;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
 * @author zhaowei
@@ -52,4 +54,12 @@ public interface ArticleService extends IService<Article> {
      */
 
     Boolean updateArticle(UpdateArticleRequest data);
+
+    /**
+     * 批量修改文章状态
+     * @param content 内容
+     * @return 成功条数
+     */
+
+    Integer updateStatus(ArrayList<AuditArticleVO> content);
 }

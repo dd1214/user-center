@@ -11,8 +11,8 @@ import com.juejin.usercenter.model.dto.user.UpdateUserRequest;
 import com.juejin.usercenter.model.dto.user.UserLoginRequest;
 import com.juejin.usercenter.model.dto.user.UserRegisterRequest;
 import com.juejin.usercenter.model.entity.User;
-import com.juejin.usercenter.model.vo.CurrentListUserVO;
-import com.juejin.usercenter.model.vo.UserVO;
+import com.juejin.usercenter.model.vo.user.CurrentListUserVO;
+import com.juejin.usercenter.model.vo.user.UserVO;
 import com.juejin.usercenter.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 

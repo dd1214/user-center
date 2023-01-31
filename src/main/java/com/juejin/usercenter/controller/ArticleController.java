@@ -10,9 +10,9 @@ import com.juejin.usercenter.mapper.UserMapper;
 import com.juejin.usercenter.model.dto.article.*;
 import com.juejin.usercenter.model.entity.Article;
 import com.juejin.usercenter.model.entity.User;
-import com.juejin.usercenter.model.vo.ArticleVO;
-import com.juejin.usercenter.model.vo.CurrentListArticleVO;
-import com.juejin.usercenter.model.vo.ImportArticleVO;
+import com.juejin.usercenter.model.vo.article.ArticleVO;
+import com.juejin.usercenter.model.vo.article.CurrentListArticleVO;
+import com.juejin.usercenter.model.vo.article.ImportArticleVO;
 import com.juejin.usercenter.service.ArticleService;
 import com.juejin.usercenter.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -102,7 +102,7 @@ public class ArticleController {
      * @return 列表
      */
 
-    @PostMapping("current_list")
+    @PostMapping("/current_list")
     public BaseResponse<CurrentListArticleVO> currentListArticle(@RequestBody CurrentListArticleRequest currentListArticle){
         if (currentListArticle == null) {
             throw new BusinessException(ErrorCode.NULL_ERROR);
@@ -165,7 +165,7 @@ public class ArticleController {
      * @return 成功
      */
 
-    @PostMapping("update")
+    @PostMapping("/update")
     public BaseResponse<Boolean> updateArticle(@RequestBody UpdateArticleRequest updateArticleRequest){
         if (updateArticleRequest == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -179,7 +179,7 @@ public class ArticleController {
      * @return 成功
      */
 
-    @PostMapping("delete")
+    @PostMapping("/delete")
     public BaseResponse<Boolean> deleteArticle(@RequestBody DeleteArticleRequest deleteArticleRequest){
         if (deleteArticleRequest == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
@@ -192,6 +192,33 @@ public class ArticleController {
         queryWrapper.eq("articleID",id);
         return ResultUtils.success(articleService.remove(queryWrapper));
     }
+
+    /**
+     * 批量更新文章状态
+     * @param updateStatusRequest 请求
+     * @return 成功条数
+     */
+
+    @PostMapping("/updateStatus")
+    public BaseResponse<Integer> updateStatus(@RequestBody UpdateStatusRequest updateStatusRequest){
+        if (updateStatusRequest == null){
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+        if (updateStatusRequest.getContent().size() <= 0 || updateStatusRequest.getContent() == null){
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+        if (updateStatusRequest.getContent().size() > 100){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"最大支持同时修改100条！");
+        }
+        return ResultUtils.success(articleService.updateStatus(updateStatusRequest.getContent()));
+    }
+
+    /**
+     *
+     * @param image 图片
+     * @return url
+     * @throws IOException 异常
+     */
 
     @PostMapping("/uploadImg")
     public BaseResponse<String> uploadArticleImg(@RequestParam MultipartFile image) throws IOException {
