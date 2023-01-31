@@ -106,6 +106,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (user == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"用户不存在");
         }
+        if (user.getUserStatus() != 0){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"用户已被冻结，无法登录");
+        }
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
         if (!encryptPassword.equals(user.getUserPassword())){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"密码错误");

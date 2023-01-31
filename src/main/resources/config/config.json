@@ -1,0 +1,671 @@
+{
+    "titleList": [
+        {
+            "text": "首页",
+            "url": "https://juejin.cn",
+            "badge": "",
+            "isImage": "false",
+            "imgUrl": ""
+        },
+        {
+            "text": "沸点",
+            "url": "https://juejin.cn/pins",
+            "badge": "",
+            "isImage": "false",
+            "imgUrl": ""
+        },
+        {
+            "text": "课程",
+            "url": "https://juejin.cn/course",
+            "badge": "",
+            "isImage": "false",
+            "imgUrl": ""
+        },
+        {
+            "text": "直播",
+            "url": "https://juejin.cn/live",
+            "badge": "",
+            "isImage": "false",
+            "imgUrl": ""
+        },
+        {
+            "text": "活动",
+            "url": "https://juejin.cn/events/all",
+            "badge": "",
+            "isImage": "false",
+            "imgUrl": ""
+        },
+        {
+            "text": "竞赛",
+            "url": "https://juejin.cn/challenge",
+            "badge": "",
+            "isImage": "false",
+            "imgUrl": ""
+        },
+        {
+            "text": "商城",
+            "url": "https://detail.youzan.com/show/goods/newest?kdt_id=104340304",
+            "badge": "",
+            "isImage": "false",
+            "imgUrl": ""
+        },
+        {
+            "text": "APP",
+            "url": "https://juejin.cn/app?utm_source=jj_nav",
+            "badge": "邀请有礼",
+            "isImage": "false",
+            "imgUrl": ""
+        },
+        {
+            "text": "插件",
+            "url": "https://juejin.cn/extension?utm_source=jj_nav",
+            "badge": "",
+            "isImage": "false",
+            "imgUrl": ""
+        },
+        {
+            "text": "",
+            "url": "https://juejin.cn/report2022/mobile?utm_source=daohang",
+            "badge": "",
+            "isImage": "true",
+            "imgUrl": "https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0cb52d4a506e44aba88bc0f2e8a8b2b7~tplv-k3u1fbpfcp-zoom-1.image"
+        }
+    ],
+    "labelList":[
+        {
+            "text": "综合",
+            "parameter": "",
+            "badge": "",
+            "sublist":[]
+        },
+        {
+            "text": "关注",
+            "parameter": "",
+            "badge": "",
+            "sublist":[]
+        },
+        {
+            "text": "后端",
+            "parameter": "",
+            "badge": "",
+            "sublist":[
+                {
+                    "text": "掘金·日新计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "Java",
+                    "parameter": ""
+                },
+                {
+                    "text": "Go",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·金石计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "架构",
+                    "parameter": ""
+                },
+                {
+                    "text": "数据库",
+                    "parameter": ""
+                },
+                {
+                    "text": "Spring Boot",
+                    "parameter": ""
+                },
+                {
+                    "text": "面试",
+                    "parameter": ""
+                },
+                {
+                    "text": "MySQL",
+                    "parameter": ""
+                },
+                {
+                    "text": "Spring",
+                    "parameter": ""
+                },
+                {
+                    "text": "Redis",
+                    "parameter": ""
+                },
+                {
+                    "text": "算法",
+                    "parameter": ""
+                },
+                {
+                    "text": "Elasticsearch",
+                    "parameter": ""
+                },
+                {
+                    "text": "Kubernetes",
+                    "parameter": ""
+                }
+            ]
+        },
+        {
+            "text": "前端",
+            "parameter": "",
+            "badge": "",
+            "sublist":[
+                {
+                    "text": "前端",
+                    "parameter": ""
+                },
+                {
+                    "text": "JavaScript",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·日新计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "Vue.js",
+                    "parameter": ""
+                },
+                {
+                    "text": "React.js",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·金石计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "CSS",
+                    "parameter": ""
+                },
+                {
+                    "text": "面试",
+                    "parameter": ""
+                },
+                {
+                    "text": "Node.js",
+                    "parameter": ""
+                },
+                {
+                    "text": "源码阅读",
+                    "parameter": ""
+                },
+                {
+                    "text": "后端",
+                    "parameter": ""
+                },
+                {
+                    "text": "Flutter",
+                    "parameter": ""
+                },
+                {
+                    "text": "Webpack",
+                    "parameter": ""
+                },
+                {
+                    "text": "TypeScript",
+                    "parameter": ""
+                },
+                {
+                    "text": "微信小程序",
+                    "parameter": ""
+                }
+
+            ]
+        },
+        {
+            "text": "Android",
+            "parameter": "",
+            "badge": "",
+            "sublist":[
+                {
+                    "text": "Android",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·日新计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "Flutter",
+                    "parameter": ""
+                },
+                {
+                    "text": "前端",
+                    "parameter": ""
+                },
+                {
+                    "text": "Kotlin",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·金石计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "Java",
+                    "parameter": ""
+                },
+                {
+                    "text": "Android Jetpack",
+                    "parameter": ""
+                },
+                {
+                    "text": "APP",
+                    "parameter": ""
+                },
+                {
+                    "text": "架构",
+                    "parameter": ""
+                },
+                {
+                    "text": "性能优化",
+                    "parameter": ""
+                },
+                {
+                    "text": "Android Studio",
+                    "parameter": ""
+                },
+                {
+                    "text": "程序员",
+                    "parameter": ""
+                },
+                {
+                    "text": "iOS",
+                    "parameter": ""
+                },
+                {
+                    "text": "gradle",
+                    "parameter": ""
+                }
+            ]
+        },
+        {
+            "text": "iOS",
+            "parameter": "",
+            "badge": "",
+            "sublist":[
+                {
+                    "text": "iOS",
+                    "parameter": ""
+                },
+                {
+                    "text": "Swift",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·日新计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "前端",
+                    "parameter": ""
+                },
+                {
+                    "text": "Flutter",
+                    "parameter": ""
+                },
+                {
+                    "text": "Objective-C",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·金石计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "SwiftUI",
+                    "parameter": ""
+                },
+                {
+                    "text": "图形学",
+                    "parameter": ""
+                },
+                {
+                    "text": "Android",
+                    "parameter": ""
+                },
+                {
+                    "text": "算法",
+                    "parameter": ""
+                },
+                {
+                    "text": "CocoaPods",
+                    "parameter": ""
+                },
+                {
+                    "text": "后端",
+                    "parameter": ""
+                },
+                {
+                    "text": "容器",
+                    "parameter": ""
+                },
+                {
+                    "text": "汇编语言",
+                    "parameter": ""
+                }
+            ]
+        },
+        {
+            "text": "人工智能",
+            "parameter": "",
+            "badge": "",
+            "sublist":[
+                {
+                    "text": "人工智能",
+                    "parameter": ""
+                },
+                {
+                    "text": "深度学习",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·日新计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "算法",
+                    "parameter": ""
+                },
+                {
+                    "text": "机器学习",
+                    "parameter": ""
+                },
+                {
+                    "text": "NLP",
+                    "parameter": ""
+                },
+                {
+                    "text": "Python",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·金石计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "计算机视觉",
+                    "parameter": ""
+                },
+                {
+                    "text": "神经网络",
+                    "parameter": ""
+                },
+                {
+                    "text": "OpenAI",
+                    "parameter": ""
+                },
+                {
+                    "text": "PyTorch",
+                    "parameter": ""
+                },
+                {
+                    "text": "数据分析",
+                    "parameter": ""
+                },
+                {
+                    "text": "后端",
+                    "parameter": ""
+                },
+                {
+                    "text": "大数据",
+                    "parameter": ""
+                }
+            ]
+        },
+        {
+            "text": "开发工具",
+            "parameter": "",
+            "badge": "",
+            "sublist":[
+                {
+                    "text": "GitHub",
+                    "parameter": ""
+                },
+                {
+                    "text": "后端",
+                    "parameter": ""
+                },
+                {
+                    "text": "开源",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·日新计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "前端",
+                    "parameter": ""
+                },
+                {
+                    "text": "程序员",
+                    "parameter": ""
+                },
+                {
+                    "text": "测试",
+                    "parameter": ""
+                },
+                {
+                    "text": "Git",
+                    "parameter": ""
+                },
+                {
+                    "text": "Linux",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·金石计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "架构",
+                    "parameter": ""
+                },
+                {
+                    "text": "GitLab",
+                    "parameter": ""
+                },
+                {
+                    "text": "Java",
+                    "parameter": ""
+                },
+                {
+                    "text": "Python",
+                    "parameter": ""
+                },
+                {
+                    "text": "云原生",
+                    "parameter": ""
+                }
+            ]
+        },
+        {
+            "text": "代码人生",
+            "parameter": "",
+            "badge": "",
+            "sublist":[
+                {
+                    "text": "前端",
+                    "parameter": ""
+                },
+                {
+                    "text": "程序员",
+                    "parameter": ""
+                },
+                {
+                    "text": "年终总结",
+                    "parameter": ""
+                },
+                {
+                    "text": "后端",
+                    "parameter": ""
+                },
+                {
+                    "text": "Android",
+                    "parameter": ""
+                },
+                {
+                    "text": "面试",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·日新计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "JavaScript",
+                    "parameter": ""
+                },
+                {
+                    "text": "数据库",
+                    "parameter": ""
+                },
+                {
+                    "text": "云原生",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金社区",
+                    "parameter": ""
+                },
+                {
+                    "text": "算法",
+                    "parameter": ""
+                },
+                {
+                    "text": "架构",
+                    "parameter": ""
+                },
+                {
+                    "text": "GitHub",
+                    "parameter": ""
+                },
+                {
+                    "text": "午夜话题",
+                    "parameter": ""
+                }
+            ]
+        },
+        {
+            "text": "阅读",
+            "parameter": "",
+            "badge": "",
+            "sublist":[
+                {
+                    "text": "前端",
+                    "parameter": ""
+                },
+                {
+                    "text": "云原生",
+                    "parameter": ""
+                },
+                {
+                    "text": "程序员",
+                    "parameter": ""
+                },
+                {
+                    "text": "青训营",
+                    "parameter": ""
+                },
+                {
+                    "text": "后端",
+                    "parameter": ""
+                },
+                {
+                    "text": "年终总结",
+                    "parameter": ""
+                },
+                {
+                    "text": "JavaScript",
+                    "parameter": ""
+                },
+                {
+                    "text": "强化学习",
+                    "parameter": ""
+                },
+                {
+                    "text": "面试",
+                    "parameter": ""
+                },
+                {
+                    "text": "云计算",
+                    "parameter": ""
+                },
+                {
+                    "text": "Kubernetes",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金·日新计划",
+                    "parameter": ""
+                },
+                {
+                    "text": "计算机图形学",
+                    "parameter": ""
+                },
+                {
+                    "text": "掘金社区",
+                    "parameter": ""
+                },
+                {
+                    "text": "容器",
+                    "parameter": ""
+                }
+
+            ]
+        }
+    ],
+    "screening":[
+        {
+            "text": "推荐",
+            "parameter": ""
+        },
+        {
+            "text": "最新",
+            "parameter": ""
+        },
+        {
+            "text": "热榜",
+            "parameter": ""
+        }
+    ],
+    "advertisement":[
+        {
+            "imgUrl":"https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/4023ed80e2794fb48858b4809b17f139~tplv-k3u1fbpfcp-no-mark:480:400:0:0.awebp?",
+            "url":"https://juejin.cn/pin/7190294399614451773?utm_source=webbanner&utm_medium=banner&utm_campaign=xcnewyear",
+            "isOpen":"true"
+        }
+    ],
+    "userList":[
+        {
+            "title":"作者榜",
+            "list":[
+                {
+                    "userId":"1234567890000000000",
+                    "nickname":"Nakano_May",
+                    "avatar":"https://p3-passport.byteimg.com/img/user-avatar/7028291c47437423552d48ac962fec83~100x100.awebp",
+                    "introduction":"Java开发工程师",
+                    "creationLevel":"4"
+                },
+                {
+                    "userId":"1234567890000000000",
+                    "nickname":"CUGGZ",
+                    "avatar":"https://p3-passport.byteimg.com/img/user-avatar/61130727b6e6bf9ed813434aeaed8ac3~100x100.awebp",
+                    "introduction":"公众号：前端充电宝",
+                    "creationLevel":"7"
+                },
+                {
+                    "userId":"1234567890000000000",
+                    "nickname":"cafeboy",
+                    "avatar":"https://p3-passport.byteimg.com/img/user-avatar/2a7aefc20982886d0d4ac11819b9a3b4~100x100.awebp",
+                    "introduction":"Java后端工程师",
+                    "creationLevel":"3"
+                }
+            ]
+        }
+    ]
+}

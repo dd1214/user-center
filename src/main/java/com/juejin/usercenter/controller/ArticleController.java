@@ -9,6 +9,7 @@ import com.juejin.usercenter.mapper.ArticleMapper;
 import com.juejin.usercenter.mapper.UserMapper;
 import com.juejin.usercenter.model.dto.article.*;
 import com.juejin.usercenter.model.entity.Article;
+import com.juejin.usercenter.model.entity.Home;
 import com.juejin.usercenter.model.entity.User;
 import com.juejin.usercenter.model.vo.article.ArticleVO;
 import com.juejin.usercenter.model.vo.article.CurrentListArticleVO;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.juejin.usercenter.MyApplicationRunner.HOME_CONFIG;
 import static com.juejin.usercenter.constant.ArticleConstant.ACCESS_KEY;
 import static com.juejin.usercenter.constant.ArticleConstant.SECRET_KEY;
 
@@ -135,8 +137,17 @@ public class ArticleController {
                 User user = new User();
                 user.setUserid(String.valueOf(System.currentTimeMillis()) +  (int)((Math.random()*9+1)*100000));
                 user.setNickname(articleVO.getAuthor());
+                user.setViewCount(articleVO.getViewCount());
+                user.setCollectCount(articleVO.getCollectCount());
                 user.setAvatar(articleVO.getAvatar());
                 userService.save(user);
+            }else {
+                User user = users.get(0);
+                Integer collectCount = user.getCollectCount();
+                Integer viewCount = user.getViewCount();
+                user.setCollectCount(collectCount + articleVO.getCollectCount());
+                user.setViewCount(viewCount + articleVO.getViewCount());
+                userService.update(user,queryWrapper);
             }
             QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
             String articleID = articleVO.getArticleID();
@@ -170,6 +181,10 @@ public class ArticleController {
         if (updateArticleRequest == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
+        String id = updateArticleRequest.getId();
+        if (id == null || id.length() != 19){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
         return ResultUtils.success(articleService.updateArticle(updateArticleRequest));
     }
 
@@ -186,7 +201,7 @@ public class ArticleController {
         }
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
         String id = deleteArticleRequest.getId();
-        if (id == null || id.length() != 17){
+        if (id == null || id.length() != 19){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         queryWrapper.eq("articleID",id);
@@ -214,7 +229,7 @@ public class ArticleController {
     }
 
     /**
-     *
+     *  上传图片
      * @param image 图片
      * @return url
      * @throws IOException 异常
@@ -239,4 +254,32 @@ public class ArticleController {
         }
         return ResultUtils.success(url);
     }
+
+    /**
+     * 获取全局配置
+     * @return 配置类（json）
+     */
+
+    @GetMapping("/getHomeConfig")
+    public BaseResponse<Home> getHomeConfig(){
+        if (HOME_CONFIG == null){
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR);
+        }
+        return ResultUtils.success(HOME_CONFIG);
+    }
+
+    @PostMapping("/setHomeConfig")
+    public BaseResponse<Boolean> setHomeConfig(@RequestBody SetHomeConfigRequest setHomeConfigRequest){
+        if (setHomeConfigRequest == null){
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+        Home homeConfig = setHomeConfigRequest.getHomeConfig();
+        if (homeConfig == null){
+            throw new BusinessException(ErrorCode.NULL_ERROR);
+        }
+        return ResultUtils.success(articleService.setHomeConfig(homeConfig));
+    }
+
+
+
 }

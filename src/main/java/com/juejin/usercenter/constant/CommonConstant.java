@@ -1,5 +1,7 @@
 package com.juejin.usercenter.constant;
 
+import com.juejin.usercenter.model.entity.Home;
+
 /**
  * 通用常量
  *

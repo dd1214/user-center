@@ -12,11 +12,13 @@ import com.juejin.usercenter.mapper.UserMapper;
 import com.juejin.usercenter.model.dto.article.CurrentListArticleRequest;
 import com.juejin.usercenter.model.dto.article.UpdateArticleRequest;
 import com.juejin.usercenter.model.entity.Article;
+import com.juejin.usercenter.model.entity.Home;
 import com.juejin.usercenter.model.entity.User;
 import com.juejin.usercenter.model.vo.article.ArticleVO;
 import com.juejin.usercenter.model.vo.article.AuditArticleVO;
 import com.juejin.usercenter.model.vo.article.CurrentListArticleVO;
 import com.juejin.usercenter.model.vo.article.UpdateArticleVO;
+import com.juejin.usercenter.model.vo.home.*;
 import com.juejin.usercenter.service.ArticleService;
 import com.juejin.usercenter.utils.ArticleMappingUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import static com.juejin.usercenter.MyApplicationRunner.HOME_CONFIG;
 import static com.juejin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
 
 
@@ -220,6 +223,80 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
             flag += articleMapper.update(article, articleQueryWrapper);
         }
         return flag;
+    }
+
+    /**
+     * 设置全局配置
+     * @param homeConfig 配置
+     * @return 成功
+     */
+
+    @Override
+    public boolean setHomeConfig(Home homeConfig) {
+        ArrayList<HomeUserListVO> userList = homeConfig.getUserList();
+        ArrayList<AdvertisementVO> advertisement = homeConfig.getAdvertisement();
+        ArrayList<HomeLabelListVO> labelList = homeConfig.getLabelList();
+        ArrayList<ScreeningListVO> screening = homeConfig.getScreening();
+        ArrayList<HomeTitleListVO> titleList = homeConfig.getTitleList();
+        //userList
+        if (userList == null || userList.get(0) == null ||StringUtils.isAnyBlank(userList.get(0).getTitle())){
+            return false;
+        }
+        for (UserListVO userListVO : userList.get(0).getList()) {
+            if (StringUtils.isAnyBlank(userListVO.getUserId(),userListVO.getAvatar(),userListVO.getCreationLevel(),userListVO.getIntroduction(),userListVO.getNickname())){
+                return false;
+            }
+        }
+        //advertisement
+        if (advertisement == null || advertisement.get(0) == null){
+            return false;
+        }
+        if (advertisement.get(0).isOpen()){
+            if (StringUtils.isAnyBlank(advertisement.get(0).getImgUrl(),advertisement.get(0).getUrl())){
+                return false;
+            }
+        }
+        //labelList
+        if (labelList == null || labelList.size() < 1){
+            return false;
+        }
+        for (HomeLabelListVO homeLabelListVO : labelList) {
+            if (StringUtils.isAnyBlank(homeLabelListVO.getText())){
+                return false;
+            }
+            if (homeLabelListVO.getSublist().size() > 0){
+                for (HomeSubListVO homeSubListVO : homeLabelListVO.getSublist()) {
+                    if (StringUtils.isAnyBlank(homeSubListVO.getText())){
+                        return false;
+                    }
+                }
+            }
+        }
+        //screening
+        if (screening == null || screening.size() < 1){
+            return false;
+        }
+        for (ScreeningListVO screeningListVO : screening) {
+            if (StringUtils.isAnyBlank(screeningListVO.getText())){
+                return false;
+            }
+        }
+        //titleList
+        if (titleList == null || titleList.size() < 1){
+            return false;
+        }
+        for (HomeTitleListVO homeTitleListVO : titleList) {
+            if (StringUtils.isAnyBlank(homeTitleListVO.getTitle(),homeTitleListVO.getUrl())){
+                return false;
+            }
+            if (homeTitleListVO.isImage()){
+                if (StringUtils.isAnyBlank(homeTitleListVO.getImgUrl())){
+                    return false;
+                }
+            }
+        }
+        HOME_CONFIG = homeConfig;
+        return true;
     }
 }
 

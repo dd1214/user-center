@@ -111,7 +111,7 @@ public class UserController {
 
     @GetMapping("/currentUserById")
     public BaseResponse<UserVO> currentUserById(String id){
-        if (id == null || id.length() != 17){
+        if (id == null || id.length() != 19){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
         return ResultUtils.success(userService.currentUserById(id));
@@ -157,7 +157,7 @@ public class UserController {
 
     @GetMapping("/delete")
     public BaseResponse<Boolean> deleteUser(String id){
-        if (id == null || id.length() != 17){
+        if (id == null || id.length() != 19){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"id格式不符合要求");
         }
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();

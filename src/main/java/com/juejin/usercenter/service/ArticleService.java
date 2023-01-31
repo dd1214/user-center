@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.juejin.usercenter.model.dto.article.CurrentListArticleRequest;
 import com.juejin.usercenter.model.dto.article.UpdateArticleRequest;
 import com.juejin.usercenter.model.entity.Article;
+import com.juejin.usercenter.model.entity.Home;
 import com.juejin.usercenter.model.vo.article.ArticleVO;
 import com.juejin.usercenter.model.vo.article.AuditArticleVO;
 import com.juejin.usercenter.model.vo.article.CurrentListArticleVO;
@@ -62,4 +63,12 @@ public interface ArticleService extends IService<Article> {
      */
 
     Integer updateStatus(ArrayList<AuditArticleVO> content);
+
+    /**
+     * 修改全局配置
+      * @param homeConfig 配置
+     * @return 成功
+     */
+    boolean setHomeConfig(Home homeConfig);
+
 }
