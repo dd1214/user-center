@@ -1,70 +1,70 @@
 {
     "titleList": [
         {
-            "text": "首页",
+            "title": "首页",
             "url": "https://juejin.cn",
             "badge": "",
             "isImage": "false",
             "imgUrl": ""
         },
         {
-            "text": "沸点",
+            "title": "沸点",
             "url": "https://juejin.cn/pins",
             "badge": "",
             "isImage": "false",
             "imgUrl": ""
         },
         {
-            "text": "课程",
+            "title": "课程",
             "url": "https://juejin.cn/course",
             "badge": "",
             "isImage": "false",
             "imgUrl": ""
         },
         {
-            "text": "直播",
+            "title": "直播",
             "url": "https://juejin.cn/live",
             "badge": "",
             "isImage": "false",
             "imgUrl": ""
         },
         {
-            "text": "活动",
+            "title": "活动",
             "url": "https://juejin.cn/events/all",
             "badge": "",
             "isImage": "false",
             "imgUrl": ""
         },
         {
-            "text": "竞赛",
+            "title": "竞赛",
             "url": "https://juejin.cn/challenge",
             "badge": "",
             "isImage": "false",
             "imgUrl": ""
         },
         {
-            "text": "商城",
+            "title": "商城",
             "url": "https://detail.youzan.com/show/goods/newest?kdt_id=104340304",
             "badge": "",
             "isImage": "false",
             "imgUrl": ""
         },
         {
-            "text": "APP",
+            "title": "APP",
             "url": "https://juejin.cn/app?utm_source=jj_nav",
             "badge": "邀请有礼",
             "isImage": "false",
             "imgUrl": ""
         },
         {
-            "text": "插件",
+            "title": "插件",
             "url": "https://juejin.cn/extension?utm_source=jj_nav",
             "badge": "",
             "isImage": "false",
             "imgUrl": ""
         },
         {
-            "text": "",
+            "title": "",
             "url": "https://juejin.cn/report2022/mobile?utm_source=daohang",
             "badge": "",
             "isImage": "true",
