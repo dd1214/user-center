@@ -110,7 +110,15 @@ public class UserController {
      */
 
     @GetMapping("/currentUserById")
-    public BaseResponse<UserVO> currentUserById(String id){
+    public BaseResponse<UserVO> currentUserById(String id,HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
+        if (currentUser.getUserRole() == 0){
+            throw new BusinessException(ErrorCode.NO_AUTH);
+        }
         if (id == null || id.length() != 19){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
@@ -124,7 +132,15 @@ public class UserController {
      */
 
     @PostMapping("/currentUserList")
-    public BaseResponse<CurrentListUserVO> currentUserList(@RequestBody CurrentListUserRequest currentListUserRequest){
+    public BaseResponse<CurrentListUserVO> currentUserList(@RequestBody CurrentListUserRequest currentListUserRequest,HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
+        if (currentUser.getUserRole() == 0){
+            throw new BusinessException(ErrorCode.NO_AUTH);
+        }
         if (currentListUserRequest == null){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
@@ -142,7 +158,15 @@ public class UserController {
      */
 
     @PostMapping("/updateUser")
-    public BaseResponse<Boolean> updateUser(@RequestBody UpdateUserRequest updateUserRequest){
+    public BaseResponse<Boolean> updateUser(@RequestBody UpdateUserRequest updateUserRequest,HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
+        if (currentUser.getUserRole() == 0){
+            throw new BusinessException(ErrorCode.NO_AUTH);
+        }
         if (updateUserRequest == null){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
@@ -156,7 +180,15 @@ public class UserController {
      */
 
     @GetMapping("/delete")
-    public BaseResponse<Boolean> deleteUser(String id){
+    public BaseResponse<Boolean> deleteUser(String id,HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
+        if (currentUser.getUserRole() == 0){
+            throw new BusinessException(ErrorCode.NO_AUTH);
+        }
         if (id == null || id.length() != 19){
             throw new BusinessException(ErrorCode.PARAMS_ERROR,"id格式不符合要求");
         }
@@ -173,6 +205,11 @@ public class UserController {
      */
     @PostMapping("/logout")
     public BaseResponse<Boolean> userLogout(HttpServletRequest request) {
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
         if (request == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }

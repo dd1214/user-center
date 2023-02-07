@@ -13,6 +13,11 @@ public class UserVO {
     private String userid;
 
     /**
+     * 用户账户
+     */
+    private String userAccount;
+
+    /**
      * 用户昵称
      */
     private String nickname;
@@ -36,6 +41,11 @@ public class UserVO {
      * 阅读量
      */
     private Integer viewCount;
+
+    /**
+     * 用户状态
+     */
+    private Integer userStatus;
 
     /**
      * 创建时间

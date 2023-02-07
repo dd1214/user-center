@@ -37,6 +37,7 @@ import java.util.UUID;
 import static com.juejin.usercenter.MyApplicationRunner.HOME_CONFIG;
 import static com.juejin.usercenter.constant.ArticleConstant.ACCESS_KEY;
 import static com.juejin.usercenter.constant.ArticleConstant.SECRET_KEY;
+import static com.juejin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
  * 文档接口
@@ -123,7 +124,15 @@ public class ArticleController {
      */
 
     @PostMapping("/import")
-    public BaseResponse<Integer> importArticle(@RequestBody ImportArticleRequest importArticleRequest){
+    public BaseResponse<Integer> importArticle(@RequestBody ImportArticleRequest importArticleRequest,HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
+        if (currentUser.getUserRole() == 0){
+            throw new BusinessException(ErrorCode.NO_AUTH);
+        }
         if (importArticleRequest == null){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
@@ -177,7 +186,12 @@ public class ArticleController {
      */
 
     @PostMapping("/update")
-    public BaseResponse<Boolean> updateArticle(@RequestBody UpdateArticleRequest updateArticleRequest){
+    public BaseResponse<Boolean> updateArticle(@RequestBody UpdateArticleRequest updateArticleRequest,HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
         if (updateArticleRequest == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -195,7 +209,12 @@ public class ArticleController {
      */
 
     @PostMapping("/delete")
-    public BaseResponse<Boolean> deleteArticle(@RequestBody DeleteArticleRequest deleteArticleRequest){
+    public BaseResponse<Boolean> deleteArticle(@RequestBody DeleteArticleRequest deleteArticleRequest ,HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
         if (deleteArticleRequest == null){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -215,7 +234,12 @@ public class ArticleController {
      */
 
     @PostMapping("/updateStatus")
-    public BaseResponse<Integer> updateStatus(@RequestBody UpdateStatusRequest updateStatusRequest){
+    public BaseResponse<Integer> updateStatus(@RequestBody UpdateStatusRequest updateStatusRequest,HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
         if (updateStatusRequest == null){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
@@ -269,7 +293,12 @@ public class ArticleController {
     }
 
     @PostMapping("/setHomeConfig")
-    public BaseResponse<Boolean> setHomeConfig(@RequestBody SetHomeConfigRequest setHomeConfigRequest){
+    public BaseResponse<Boolean> setHomeConfig(@RequestBody SetHomeConfigRequest setHomeConfigRequest,HttpServletRequest request){
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User currentUser = (User) userObj;
+        if (currentUser == null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"请先登录");
+        }
         if (setHomeConfigRequest == null){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
