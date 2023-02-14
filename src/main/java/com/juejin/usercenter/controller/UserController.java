@@ -14,6 +14,7 @@ import com.juejin.usercenter.model.entity.User;
 import com.juejin.usercenter.model.vo.user.CurrentListUserVO;
 import com.juejin.usercenter.model.vo.user.UserVO;
 import com.juejin.usercenter.service.UserService;
+import com.juejin.usercenter.utils.RSAUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import static com.juejin.usercenter.constant.CommonConstant.PRIVATE_KEY;
 import static com.juejin.usercenter.constant.UserConstant.USER_LOGIN_STATE;
 
 
@@ -41,25 +43,25 @@ public class UserController {
     private UserService userService;
 
     /**
-     * 登录
+     * 注册
      * @param userRegisterRequest 请求
      * @return id
      */
 
     @PostMapping("/register")
-    public BaseResponse<String> userRegister(@RequestBody UserRegisterRequest userRegisterRequest){
+    public BaseResponse<String> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) throws Exception {
         if (userRegisterRequest == null){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
-        String userAccount = userRegisterRequest.getUserAccount();
+        String userAccount = RSAUtils.decryptByPrivateKey(PRIVATE_KEY,userRegisterRequest.getUserAccount());
         String nickname = userRegisterRequest.getNickname();
         String userAvatar = userRegisterRequest.getUserAvatar();
-        String userPassword = userRegisterRequest.getUserPassword();
+        String userPassword =  RSAUtils.decryptByPrivateKey(PRIVATE_KEY,userRegisterRequest.getUserPassword());
         String introduction = userRegisterRequest.getIntroduction();
         if (StringUtils.isAnyBlank(nickname,userAvatar,userPassword,introduction,userAccount)){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
-        return ResultUtils.success(userService.userRegister( userAccount,nickname, userAvatar, userPassword, introduction));
+        return ResultUtils.success(userService.userRegister(userAccount,nickname, userAvatar, userPassword, introduction));
     }
 
     /**
@@ -70,12 +72,12 @@ public class UserController {
      */
 
     @PostMapping("/login")
-    public BaseResponse<UserVO> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request){
+    public BaseResponse<UserVO> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) throws Exception {
         if (userLoginRequest == null){
             throw new BusinessException(ErrorCode.NULL_ERROR);
         }
-        String userAccount = userLoginRequest.getUserAccount();
-        String userPassword = userLoginRequest.getUserPassword();
+        String userAccount = RSAUtils.decryptByPrivateKey(PRIVATE_KEY,userLoginRequest.getUserAccount());
+        String userPassword = RSAUtils.decryptByPrivateKey(PRIVATE_KEY,userLoginRequest.getUserPassword());
         if (StringUtils.isAnyBlank(userAccount,userPassword)){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }

@@ -626,11 +626,11 @@
         },
         {
             "text": "最新",
-            "parameter": ""
+            "parameter": "currentTime"
         },
         {
             "text": "热榜",
-            "parameter": ""
+            "parameter": "collectCount"
         }
     ],
     "advertisement":[
