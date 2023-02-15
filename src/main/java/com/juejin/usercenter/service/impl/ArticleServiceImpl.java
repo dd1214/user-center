@@ -134,9 +134,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         Integer articleStatus = currentListArticle.getArticleStatus();
         String label = currentListArticle.getLabel();
         String category = currentListArticle.getCategory();
+        String author = currentListArticle.getAuthor();
         long total = 0;
         try {
             QueryWrapper<Article> articleQueryWrapper = new QueryWrapper<>();
+            articleQueryWrapper.eq(StringUtils.isNoneBlank(author),"author",author);
             articleQueryWrapper.eq(articleStatus != -1,"articleStatus",articleStatus);
             articleQueryWrapper.like(StringUtils.isNoneBlank(label),"label",label);
             articleQueryWrapper.eq(StringUtils.isNoneBlank(category),"category",category);

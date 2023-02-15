@@ -14,6 +14,8 @@ public class CurrentListArticleRequest extends PageRequest implements Serializab
 
     private String label;
 
+    private String author;
+
     private String content;
 
     private String category;
