@@ -81,7 +81,12 @@ public class UserController {
         if (StringUtils.isAnyBlank(userAccount,userPassword)){
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        User user = userService.userLogin(userAccount, userPassword, request);
+        User user = null;
+        try {
+            user = userService.userLogin(userAccount, userPassword, request);
+        } catch (Exception e) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"登录失败");
+        }
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user,userVO);
         return ResultUtils.success(userVO);

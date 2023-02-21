@@ -3,7 +3,7 @@ spring:
     name: user-center
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/juejin
+    url: jdbc:mysql://127.0.0.1/juejin
     username: root
     password: 123456
   mvc:
